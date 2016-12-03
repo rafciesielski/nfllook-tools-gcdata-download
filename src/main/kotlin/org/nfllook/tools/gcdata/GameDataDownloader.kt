@@ -8,7 +8,7 @@ import java.io.File
 object GameDataDownloader {
 
     fun download(path: String, season: Int, week: Int?) {
-        val gameWeeks = GameWeekData.getGameWeeks(season, week)
+        val gameWeeks = GameWeekData(path, season).getGameWeeks(week)
         println("Game weeks: $gameWeeks")
         downloadSeasonData(path, gameWeeks)
         println("Done. Data downloaded to: $path")
