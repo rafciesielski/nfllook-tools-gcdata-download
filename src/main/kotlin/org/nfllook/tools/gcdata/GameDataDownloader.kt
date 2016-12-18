@@ -7,15 +7,15 @@ import java.io.File
 
 object GameDataDownloader {
 
-    fun download(path: String, season: Int, week: Int?) {
-        val gameWeeks = GameWeekData(path, season).getGameWeeks(week)
-        println("Game weeks: $gameWeeks")
-        downloadSeasonData(path, gameWeeks)
+    fun download(path: String, season: Int, week: Int?, uri: String) {
+        val schedule = ScheduleService(season, uri).getSchedule(week)
+        println("Schedule: $schedule")
+        downloadSeasonData(path, schedule)
         println("Done. Data downloaded to: $path")
     }
 
-    private fun downloadSeasonData(path: String, gameWeeks: List<GameWeek>) {
-        for((season, week, gamesIds) in gameWeeks) {
+    private fun downloadSeasonData(path: String, schedule: List<WeekSchedule>) {
+        for((season, week, gamesIds) in schedule) {
             println("Downloading season: $season, week: $week ...")
             for(gameId in gamesIds) {
                 downloadWeekData(path, season, week, gameId)
